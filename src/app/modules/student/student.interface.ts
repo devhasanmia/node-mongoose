@@ -1,5 +1,3 @@
-import {} from 'mongoose';
-
 export type Guardian = {
   fatherName: string;
   fatherOccupation: string;
@@ -23,7 +21,6 @@ export type Name = {
   lastName: string;
 };
 
-
 export type Student = {
   name: Name;
   gender: 'male' | 'female';
@@ -32,8 +29,9 @@ export type Student = {
   contactNumber: string;
   emargencyContactNumber: string;
   BloodGroup?: BloodGroup;
-  avatar?: string;
   presentAddress: string;
   permanentAddress: string;
   guardian: Guardian;
+  profilePicture?: string;
+  isActive: 'Active' | 'Pending' | 'Inactive';
 };
