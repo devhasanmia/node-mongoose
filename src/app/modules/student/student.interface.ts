@@ -6,6 +6,7 @@ export type Guardian = {
   motherOccupation: string;
   motherContactNumber: string;
 };
+
 export type BloodGroup =
   | 'A+'
   | 'A-'
@@ -15,6 +16,7 @@ export type BloodGroup =
   | 'AB-'
   | 'O+'
   | 'O-';
+
 export type Name = {
   firstName: string;
   middleName: string;
@@ -27,7 +29,7 @@ export type Student = {
   email: string;
   dateOfBirth: string;
   contactNumber: string;
-  emargencyContactNumber: string;
+  emergencyContactNumber: string;
   BloodGroup?: BloodGroup;
   presentAddress: string;
   permanentAddress: string;

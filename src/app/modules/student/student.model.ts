@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 import { Guardian, Name, Student } from './student.interface';
-import validator from 'validator';
 
 const nameSchema = new Schema<Name>({
   firstName: {
@@ -9,7 +8,7 @@ const nameSchema = new Schema<Name>({
   },
   middleName: {
     type: String,
-    trim: true,
+    required: true,
   },
   lastName: {
     type: String,
@@ -45,20 +44,12 @@ const studentSchema = new Schema<Student>({
   },
   gender: {
     type: String,
-    enum: {
-      values: ['male', 'female'],
-      message: '{VALUE} is not a valid gender. please provide male or female.',
-    },
-    required: true,
+    enum: ['male', 'female'],
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    validate: {
-      validator: (value: string)=> validator.isEmail(value),
-      message: '{VALUE} is not a valid Email'
-    }
   },
   dateOfBirth: {
     type: String,
@@ -67,16 +58,13 @@ const studentSchema = new Schema<Student>({
     type: String,
     required: true,
   },
-  emargencyContactNumber: {
+  emergencyContactNumber: {
     type: String,
     required: true,
   },
   BloodGroup: {
     type: String,
-    enum: {
-      values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-      message: `{VALUE} is not a valid Blood Group Plase Provide Valid Blood Group`,
-    },
+    enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
     required: true,
   },
   presentAddress: {
@@ -87,10 +75,16 @@ const studentSchema = new Schema<Student>({
     type: String,
     required: true,
   },
-  guardian: guardianSchema,
+  guardian: {
+    type: guardianSchema,
+    required: true,
+  },
+  profilePicture: {
+    type: String,
+  },
   isActive: {
     type: String,
-    enum: ['Active', 'Pending', 'blocked'],
+    enum: ['Active', 'Pending', 'Inactive'],
     default: 'Pending',
   },
 });
