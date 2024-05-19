@@ -40,6 +40,7 @@ const createStudent = async (req: Request, res: Response) => {
     // Zod schema for Student
     const studentValidationSchema = z.object({
       name: nameValidationSchema,
+      password:z.string().min((3), {message:"Must be 3 latter"}),
       gender: z.enum(['male', 'female']),
       email: z.string().email({ message: 'Invalid email address' }),
       dateOfBirth: z.string(),

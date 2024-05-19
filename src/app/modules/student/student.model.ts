@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { Guardian, Name, Student } from './student.interface';
+import bcrypt from 'bcrypt';
+import { string } from 'joi';
 
 const nameSchema = new Schema<Name>({
   firstName: {
@@ -40,6 +42,10 @@ const guardianSchema = new Schema<Guardian>({
 const studentSchema = new Schema<Student>({
   name: {
     type: nameSchema,
+    required: true,
+  },
+  password: {
+    type: String,
     required: true,
   },
   gender: {
@@ -87,6 +93,22 @@ const studentSchema = new Schema<Student>({
     enum: ['Active', 'Pending', 'Inactive'],
     default: 'Pending',
   },
+});
+
+studentSchema.post('save', async function (next) {
+  console.log('Post Hook We Will Save Data: ', this);
+});
+
+studentSchema.pre('save', async function (next) {
+  console.log('Pre Hook We Will Save Data: ', this.password);
+  const saltRounds: number = 10;
+  let normalPass: any = this.password;
+  const hash = await bcrypt.hash(normalPass, saltRounds);
+  this.password = hash;
+  console.log(this.password);
+
+  this.isActive = "Pending"
+  next();
 });
 
 const StudentModel = model<Student>('Student', studentSchema);

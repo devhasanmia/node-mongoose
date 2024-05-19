@@ -25,6 +25,7 @@ export type Name = {
 
 export type Student = {
   name: Name;
+  password: String
   gender: 'male' | 'female';
   email: string;
   dateOfBirth: string;
