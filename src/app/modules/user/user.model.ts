@@ -13,7 +13,8 @@ const userSchema = new Schema<TUser>(
     },
     needsPasswordChange: {
       type: Boolean,
-      required: true,
+      //   required: true,
+      default: true,
     },
     role: {
       type: String,
@@ -22,6 +23,7 @@ const userSchema = new Schema<TUser>(
     status: {
       type: String,
       enum: ['in-progress', 'blocked'],
+      default: 'in-progress',
     },
     isDeleted: {
       type: Boolean,

@@ -2,7 +2,6 @@ import { object, string, enum as zodEnum } from 'zod';
 
 const GenderEnum = zodEnum(['male', 'female']);
 const BloodGroupEnum = zodEnum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']);
-const IsActiveEnum = zodEnum(['Active', 'Pending', 'Inactive']);
 
 const nameValidationSchema = object({
     firstName: string({
@@ -82,7 +81,6 @@ const studentValidationSchema = object({
     }),
     guardian: guardianValidationSchema,
     profilePicture: string().optional(),
-    isActive: IsActiveEnum.default('Pending'),
 });
 
 export { studentValidationSchema, nameValidationSchema, guardianValidationSchema };

@@ -51,9 +51,11 @@ const studentSchema = new Schema<TStudent>({
     type: nameSchema,
     required: true,
   },
-  password: {
-    type: String,
+  user: {
+    type: Schema.Types.ObjectId,
     required: true,
+    ref: 'User',
+    unique: true,
   },
   gender: {
     type: String,
@@ -95,24 +97,9 @@ const studentSchema = new Schema<TStudent>({
   profilePicture: {
     type: String,
   },
-  isActive: {
-    type: String,
-    enum: ['Active', 'Pending', 'Inactive'],
-    default: 'Pending',
-  },
 });
 
-studentSchema.pre('save', async function (next) {
-  console.log('Pre Hook We Will Save Data: ', this.password);
-  const saltRounds: number = 10;
-  const normalPass: any = this.password;
-  const hash = await bcrypt.hash(normalPass, saltRounds);
-  this.password = hash;
-  console.log(this.password);
-  this.isActive = 'Pending';
-  next();
-});
 
-const StudentModel = model<TStudent>('Student', studentSchema);
+const Student = model<TStudent>('Student', studentSchema);
 
-export default StudentModel;
+export default Student;

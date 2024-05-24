@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export type TName = {
   firstName: string;
   middleName: string;
@@ -13,10 +15,20 @@ export type TGuardian = {
   motherOccupation: string;
 };
 
-export type TBloodGroup = 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+export type TBloodGroup =
+  | 'A+'
+  | 'A-'
+  | 'B+'
+  | 'B-'
+  | 'AB+'
+  | 'AB-'
+  | 'O+'
+  | 'O-';
 
 export type TStudent = {
+  id: string;
   name: TName;
+  user: Types.ObjectId;
   password: string;
   gender: 'male' | 'female';
   email: string;
@@ -28,5 +40,4 @@ export type TStudent = {
   permanentAddress: string;
   guardian: TGuardian;
   profilePicture?: string;
-  isActive?: 'Active' | 'Pending' | 'Inactive';
 };
