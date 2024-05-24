@@ -1,40 +1,32 @@
-export type Guardian = {
-  fatherName: string;
-  fatherOccupation: string;
-  fatherContactNumber: string;
-  motherName: string;
-  motherOccupation: string;
-  motherContactNumber: string;
-};
-
-export type BloodGroup =
-  | 'A+'
-  | 'A-'
-  | 'B+'
-  | 'B-'
-  | 'AB+'
-  | 'AB-'
-  | 'O+'
-  | 'O-';
-
-export type Name = {
+export type TName = {
   firstName: string;
   middleName: string;
   lastName: string;
 };
 
-export type Student = {
-  name: Name;
-  password: String
+export type TGuardian = {
+  fatherName: string;
+  fatherOccupation: string;
+  fatherContactNumber: string;
+  motherName: string;
+  motherContactNumber: string;
+  motherOccupation: string;
+};
+
+export type TBloodGroup = 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+
+export type TStudent = {
+  name: TName;
+  password: string;
   gender: 'male' | 'female';
   email: string;
-  dateOfBirth: string;
+  dateOfBirth?: string;
   contactNumber: string;
   emergencyContactNumber: string;
-  BloodGroup?: BloodGroup;
+  BloodGroup: TBloodGroup;
   presentAddress: string;
   permanentAddress: string;
-  guardian: Guardian;
+  guardian: TGuardian;
   profilePicture?: string;
-  isActive: 'Active' | 'Pending' | 'Inactive';
+  isActive?: 'Active' | 'Pending' | 'Inactive';
 };
