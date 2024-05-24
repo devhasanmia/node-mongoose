@@ -1,12 +1,12 @@
 import { Schema, model } from 'mongoose';
-import { Guardian, Name, Student } from './student.interface';
 import bcrypt from 'bcrypt';
-import { string } from 'joi';
+import { TGuardian, TName, TStudent } from './student.interface';
 
-const nameSchema = new Schema<Name>({
+const nameSchema = new Schema<TName>({
   firstName: {
     type: String,
     trim: true,
+    required: true,
   },
   middleName: {
     type: String,
@@ -15,31 +15,38 @@ const nameSchema = new Schema<Name>({
   lastName: {
     type: String,
     trim: true,
+    required: true,
   },
 });
 
-const guardianSchema = new Schema<Guardian>({
+const guardianSchema = new Schema<TGuardian>({
   fatherName: {
     type: String,
+    required: true,
   },
   fatherOccupation: {
     type: String,
+    required: true,
   },
   fatherContactNumber: {
     type: String,
+    required: true,
   },
   motherName: {
     type: String,
+    required: true,
   },
   motherContactNumber: {
     type: String,
+    required: true,
   },
   motherOccupation: {
     type: String,
+    required: true,
   },
 });
 
-const studentSchema = new Schema<Student>({
+const studentSchema = new Schema<TStudent>({
   name: {
     type: nameSchema,
     required: true,
@@ -95,22 +102,17 @@ const studentSchema = new Schema<Student>({
   },
 });
 
-studentSchema.post('save', async function (next) {
-  console.log('Post Hook We Will Save Data: ', this);
-});
-
 studentSchema.pre('save', async function (next) {
   console.log('Pre Hook We Will Save Data: ', this.password);
   const saltRounds: number = 10;
-  let normalPass: any = this.password;
+  const normalPass: any = this.password;
   const hash = await bcrypt.hash(normalPass, saltRounds);
   this.password = hash;
   console.log(this.password);
-
-  this.isActive = "Pending"
+  this.isActive = 'Pending';
   next();
 });
 
-const StudentModel = model<Student>('Student', studentSchema);
+const StudentModel = model<TStudent>('Student', studentSchema);
 
 export default StudentModel;
