@@ -8,7 +8,7 @@ const globalErrorHandler = (
   next: NextFunction,
 ) => {
   let status = httpStatus.INTERNAL_SERVER_ERROR;
-  let message = err.message || 'Internal Server Error';
+  const message = err.message || 'Internal Server Error';
   if (err.status) {
     status = err.status;
   }

@@ -16,10 +16,7 @@ const createStudentIntoDB = async (password: string, student: TStudent) => {
   // create a new student
   if (newUser && newUser.id && newUser._id) {
     student.id = newUser.id;
-    student.user = newUser._id;   
-  }
-  if (newUser) {
-    console.log(newUser);
+    student.user = newUser._id;
   }
   const newStudent = await Student.create(student);
   return newStudent;

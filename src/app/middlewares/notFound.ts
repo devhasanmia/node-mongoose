@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-var createError = require('http-errors');
+import httpStatus from 'http-status';
 
 const notFound = (req: Request, res: Response, next: NextFunction) => {
-  return res.status(createError.NOT_FOUND).json({
+  return res.status(httpStatus.NOT_FOUND).json({
     success: false,
     message: 'API Not Found !!',
     error: '',
