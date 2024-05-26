@@ -1,33 +1,34 @@
-import { Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import { StudentServices } from './student.services';
+import sendResponse from '../../utils/sendResponse';
+import httpStatus from 'http-status';
+import catchAsync from '../../utils/catchAsync';
 
-const getAllStudent = async (req: Request, res: Response) => {
-  try {
-    const result = await StudentServices.getAllStudentFromDB();
-    res.status(200).json({
-      success: true,
-      message: 'All Student Retrive successfully',
-      total: result.length,
-      data: result,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+const getAllStudent: RequestHandler = catchAsync(async (req, res, next) => {
+  const result = await StudentServices.getAllStudentFromDB();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Student Retrive successfully',
+    data: result,
+  });
+});
 
-const getSingleStudent = async (req: Request, res: Response) => {
-  try {
-    const id = req.params.id;
-    const result = await StudentServices.getSingleStudentFromDB(id);
-    res.status(200).json({
-      success: true,
-      message: 'Single Student Retrive successfully',
-      data: result,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+const getSingleStudent: RequestHandler = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const result = await StudentServices.getSingleStudentFromDB(id);
+  res.status(200).json({
+    success: true,
+    message: 'Single Student Retrive successfully',
+    data: result,
+  });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Single Student Retrive successfully',
+    data: result,
+  });
+});
 export const StudentController = {
   getAllStudent,
   getSingleStudent,
