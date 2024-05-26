@@ -11,7 +11,7 @@ const academicSemesterValidation = z.object({
       required_error: 'Name is required and must be a valid semester name',
       invalid_type_error: 'Invalid semester name type',
     }),
-    date: z.date({
+    year: z.string({
       required_error: 'Date is required',
       invalid_type_error: 'Date must be a valid date',
     }),
