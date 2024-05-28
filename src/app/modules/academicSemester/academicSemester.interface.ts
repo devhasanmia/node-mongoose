@@ -14,6 +14,9 @@ export type TMonths =
 
 export type TacademicSemesterName = 'Autumn' | 'Summar' | 'Fall';
 export type TacademicSemesterCode = '01' | '02' | '03';
+export type TacademicSemesterNameCodeMapper = {
+  [key: string]: string;
+};
 
 export type TacademicSemester = {
   name: TacademicSemesterName;
