@@ -88,6 +88,10 @@ const studentValidationSchema = object({
         invalid_type_error: 'Permanent Address must be a string',
       }),
       guardian: guardianValidationSchema,
+      admissionSemester: string({
+        required_error: 'Admission Semester is Required',
+        invalid_type_error: 'Please Input must be string',
+      }),
       profilePicture: string().optional(),
     }),
   }),

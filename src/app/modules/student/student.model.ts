@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
 import { TGuardian, TName, TStudent } from './student.interface';
 
 const nameSchema = new Schema<TName>({
@@ -89,6 +89,11 @@ const studentSchema = new Schema<TStudent>({
     type: String,
     required: true,
   },
+  admissionSemester: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicSemester',
+    required: true,
+  },
   guardian: {
     type: guardianSchema,
     required: true,
@@ -97,7 +102,6 @@ const studentSchema = new Schema<TStudent>({
     type: String,
   },
 });
-
 
 const Student = model<TStudent>('Student', studentSchema);
 
