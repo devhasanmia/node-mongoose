@@ -9,5 +9,15 @@ router.post(
   validateRequest(academicDepartmentValidation.create),
   academicDepartmentControllers.createAcademicDepartment,
 );
+router.get(
+  '/',
+  academicDepartmentControllers.getAllAcademicDepartment,
+);
+router.get(
+  '/:id',
+  academicDepartmentControllers.getSingleAcademicDepartment,
+);
 
+
+router.put('/:id', validateRequest(academicDepartmentValidation.update), academicDepartmentControllers.updateAcademicDepartment);
 export const academicDepartmentRouter = router;
