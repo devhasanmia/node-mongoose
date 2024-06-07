@@ -5,7 +5,7 @@ import validateRequest from '../../middlewares/validateRequest';
 const router = express.Router();
 
 router.post(
-  '/create-academic-semester',
+  '/create',
   validateRequest(academicSemesterValidations.create),
   AcademicSemesterController.createAcademicSemester,
 );

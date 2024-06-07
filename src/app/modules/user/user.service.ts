@@ -7,16 +7,11 @@ import User from './user.model';
 import { generateStudentId } from './user.utils';
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
-  // create a user object
   const userData: Partial<TUser> = {};
-
-  //if password is not given , use deafult password
   userData.password = password || (config.defaultPassword as string);
 
-  //set student role
   userData.role = 'student';
-
-  // find academic semester info
+  
   const admissionSemester = await AcademicSemester.findById(
     payload.admissionSemester,
   );
