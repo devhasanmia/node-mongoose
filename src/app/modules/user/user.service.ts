@@ -1,3 +1,4 @@
+import { unknown } from 'zod';
 import config from '../../config';
 import AcademicSemester from '../academicSemester/academicSemester.model';
 import { TStudent } from '../student/student.interface';
@@ -7,32 +8,56 @@ import User from './user.model';
 import { generateStudentId } from './user.utils';
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
-  const userData: Partial<TUser> = {};
-  userData.password = password || (config.defaultPassword as string);
+  try {
+    // Prepare user data
+    const userData: Partial<TUser> = {
+      password: password || (config.defaultPassword as string),
+      role: 'student',
+    };
 
-  userData.role = 'student';
-  
-  const admissionSemester = await AcademicSemester.findById(
-    payload.admissionSemester,
-  );
+    // Find admission semester
+    const admissionSemester = await AcademicSemester.findById(
+      payload.admissionSemester,
+    );
+    if (!admissionSemester) {
+      throw new Error('Admission semester not found');
+    }
 
-  //set  generated id
-  // userData.id = await generateStudentId(admissionSemester);
+    // Generate student ID
+    userData.id = await generateStudentId(admissionSemester);
 
-  // create a user
-  const newUser = await User.create(userData);
+    // Create a new user
+    const newUser = await User.create(userData);
 
-  //create a student
-  if (Object.keys(newUser).length) {
-    // set id , _id as user
-    payload.id = newUser.id;
-    payload.user = newUser._id; //reference _id
+    if (newUser) {
+      // Prepare student data
+      const studentData = {
+        ...payload,
+        id: newUser.id,
+        user: newUser._id,
+      };
 
-    const newStudent = await Student.create(payload);
-    return newStudent;
+      // Create a new student
+      const newStudent = await Student.create(studentData);
+      return newStudent;
+    } else {
+      throw new Error('User creation failed');
+    }
+  } catch (error) {
+    console.error('Error creating student:', error);
+    throw error; // Rethrow the error to handle it upstream
   }
+};
+
+const getAllUsers = async (query: Record<string, unknown>) => {
+  const users = await User.find(query);
+  if (!users) {
+    throw new Error('No users found');
+  }
+  return users;
 };
 
 export const UserServices = {
   createStudentIntoDB,
+  getAllUsers,
 };

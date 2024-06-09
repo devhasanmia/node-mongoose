@@ -12,6 +12,16 @@ const createStudent: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 
+const getAllUsers: RequestHandler = catchAsync(async (req, res, next) => {
+  const result = await UserServices.getAllUsers(req.query);
+  res.status(200).json({
+    success: true,
+    message: 'All Users Retrive successfully',
+    data: result,
+  });
+});
+
 export const UserController = {
   createStudent,
+  getAllUsers,
 };

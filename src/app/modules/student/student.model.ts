@@ -101,6 +101,11 @@ const studentSchema = new Schema<TStudent>({
   profilePicture: {
     type: String,
   },
+  academicFaculty: {
+    type: Schema.Types.ObjectId,
+    ref: 'AcademicFaculty',
+    required: true,
+  }
 });
 
 const Student = model<TStudent>('Student', studentSchema);
