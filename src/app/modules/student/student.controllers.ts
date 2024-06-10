@@ -5,7 +5,6 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 
 const getAllStudent: RequestHandler = catchAsync(async (req, res, next) => {
-  
   const result = await StudentServices.getAllStudentFromDB(req.query);
   console.log(req.query);
   sendResponse(res, {
@@ -32,8 +31,19 @@ const getSingleStudent: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 
+const deleteStudnet: RequestHandler = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const result = await StudentServices.deleteStudentById(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Student deleted successfully',
+    data: result,
+  });
+});
 
 export const StudentController = {
   getAllStudent,
   getSingleStudent,
+  deleteStudnet,
 };

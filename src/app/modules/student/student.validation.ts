@@ -93,6 +93,7 @@ const studentValidationSchema = object({
         invalid_type_error: 'Please Input must be string',
       }),
       profilePicture: string().optional(),
+      isDeleted: string().optional(),
     }),
   }),
 });

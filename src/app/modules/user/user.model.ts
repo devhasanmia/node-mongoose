@@ -10,6 +10,7 @@ const userSchema = new Schema<TUser>(
     password: {
       type: String,
       required: true,
+      select: 0
     },
     needsPasswordChange: {
       type: Boolean,
@@ -26,7 +27,7 @@ const userSchema = new Schema<TUser>(
     },
     isDeleted: {
       type: Boolean,
-      required: false,
+      default: false,
     },
   },
   { timestamps: true },

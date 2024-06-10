@@ -1,11 +1,11 @@
-console.clear()
+console.clear();
 import app from './app';
 import config from './app/config';
 import mongoose from 'mongoose';
 
 async function main() {
   try {
-    await mongoose.connect(config.databaseURL as string, );
+    await mongoose.connect(config.databaseURL as string);
     app.listen(config.port, () => {
       console.log(`Server is running on port ${config.port}`);
     });

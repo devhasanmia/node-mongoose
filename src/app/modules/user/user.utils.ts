@@ -1,5 +1,8 @@
-import { TacademicSemester } from '../academicSemester/academicSemester.interface';
-import User from './user.model';
+// year semesterCode 4digit number
+
+import { TacademicSemester } from "../academicSemester/academicSemester.interface";
+import User from "./user.model";
+
 
 const findLastStudentId = async () => {
   const lastStudent = await User.findOne(
