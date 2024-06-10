@@ -1,5 +1,5 @@
-import { unknown } from 'zod';
 import config from '../../config';
+import AppError from '../../errors/AppError';
 import AcademicSemester from '../academicSemester/academicSemester.model';
 import { TStudent } from '../student/student.interface';
 import Student from '../student/student.model';
@@ -20,7 +20,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
       payload.admissionSemester,
     );
     if (!admissionSemester) {
-      throw new Error('Admission semester not found');
+      throw new AppError(404, 'Admission semester not found');
     }
 
     // Generate student ID
@@ -41,18 +41,18 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
       const newStudent = await Student.create(studentData);
       return newStudent;
     } else {
-      throw new Error('User creation failed');
+      throw new AppError(400, 'User creation failed');
     }
   } catch (error) {
     console.error('Error creating student:', error);
-    throw error; // Rethrow the error to handle it upstream
+    throw error;
   }
 };
 
 const getAllUsers = async (query: Record<string, unknown>) => {
   const users = await User.find(query);
   if (!users) {
-    throw new Error('No users found');
+    throw new AppError(404, 'No users found');
   }
   return users;
 };

@@ -1,3 +1,4 @@
+import AppError from '../../errors/AppError';
 import { TAcademicFaculty } from './academicFaculty.interface';
 import AcademicFaculty from './academicFaculty.model';
 
@@ -22,7 +23,7 @@ const updateAcademicFacultyById = async (
 ) => {
   const existingFaculty = await AcademicFaculty.findOne({ _id: id });
   if (!existingFaculty) {
-    throw new Error('Faculty does not exist');
+    throw new AppError(404, 'Faculty does not exist');
   }
   const updatedFaculty = await AcademicFaculty.findByIdAndUpdate(
     id,
@@ -30,7 +31,7 @@ const updateAcademicFacultyById = async (
     { new: true },
   );
   if (!updatedFaculty) {
-    throw new Error('Faculty not updated');
+    throw new AppError(400, 'Faculty not updated');
   }
   return updatedFaculty;
 };

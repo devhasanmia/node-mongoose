@@ -1,3 +1,5 @@
+import httpStatus from 'http-status';
+import AppError from '../../errors/AppError';
 import { academicSemesterNameCodeMapper } from './academicSemester.const';
 import { TacademicSemester } from './academicSemester.interface';
 import AcademicSemester from './academicSemester.model';
@@ -7,7 +9,7 @@ const createAcademicSemester = async (semesterDetails: TacademicSemester) => {
     academicSemesterNameCodeMapper[semesterDetails.name] !==
     semesterDetails.code
   ) {
-    throw new Error('Invalid Semester Code');
+    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid Semester Code');
   }
   const createdSemester = await AcademicSemester.create(semesterDetails);
   return createdSemester;
@@ -17,7 +19,7 @@ const getAllAcademicSemesters = async () => {
   const academicSemesters = await AcademicSemester.find();
 
   if (academicSemesters.length <= 0) {
-    throw new Error('Academic Semesters Not Found');
+    throw new AppError(404, 'Academic Semesters Not Found');
   }
 
   return academicSemesters;
@@ -26,7 +28,7 @@ const getAllAcademicSemesters = async () => {
 const getAcademicSemesterById = async (id: string) => {
   const academicSemester = await AcademicSemester.findById(id);
   if (!academicSemester) {
-    throw new Error('No academic semester found');
+    throw new AppError(404, 'No academic semester found');
   }
   return academicSemester;
 };
@@ -38,7 +40,7 @@ const updateAcademicSemesterById = async (
   if (
     academicSemesterNameCodeMapper[updatedDetails.name] !== updatedDetails.code
   ) {
-    throw new Error('Invalid Semester Code');
+    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid Semester Code');
   }
 
   const existingSemester = await AcademicSemester.findOne({
@@ -47,7 +49,7 @@ const updateAcademicSemesterById = async (
   });
 
   if (existingSemester) {
-    throw new Error('Semester already exists, no update performed');
+    throw new AppError(409, 'Semester already exists, no update performed');
   }
 
   const updatedSemester = await AcademicSemester.findByIdAndUpdate(
@@ -58,7 +60,7 @@ const updateAcademicSemesterById = async (
     },
   );
   if (!updatedSemester) {
-    throw new Error('No academic semester found');
+    throw new AppError(404, 'No academic semester found');
   }
 
   return updatedSemester;
@@ -67,16 +69,15 @@ const updateAcademicSemesterById = async (
 const deleteAcademicSemesterById = async (id: string) => {
   const academicSemester = await AcademicSemester.findByIdAndDelete(id);
   if (!academicSemester) {
-    throw new Error('No academic semester found');
+    throw new AppError(404, 'No academic semester found');
   }
   return null;
 };
-
 
 export const AcademicSemesterService = {
   createAcademicSemester,
   getAllAcademicSemesters,
   getAcademicSemesterById,
   updateAcademicSemesterById,
-  deleteAcademicSemesterById
+  deleteAcademicSemesterById,
 };
