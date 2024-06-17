@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { RequestHandler } from 'express';
 import { StudentServices } from './student.services';
 import sendResponse from '../../utils/sendResponse';
@@ -6,7 +8,6 @@ import catchAsync from '../../utils/catchAsync';
 
 const getAllStudent: RequestHandler = catchAsync(async (req, res, next) => {
   const result = await StudentServices.getAllStudentFromDB(req.query);
-  console.log(req.query);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
